@@ -97,7 +97,7 @@ public class ModFoundry
 {
   public static final String MODID = "foundry";
   public static final String MODNAME = "Foundry";
-  public static final String MODVERSION = "1.2.2.0";
+  public static final String MODVERSION = "1.2.2.0-FROGPATCH-A";
 
   @Instance(MODID)
   public static ModFoundry instance;
@@ -119,6 +119,7 @@ public class ModFoundry
   @EventHandler
   public void preInit(FMLPreInitializationEvent event)
   {
+    System.out.println("Loading Patched Version of Foundry");
     Configuration config = new Configuration(event.getSuggestedConfigurationFile());
     config.load();
     ModIntegration.RegisterIntegration(config,ModIntegrationIC2.class,"ic2");
@@ -234,6 +235,8 @@ public class ModFoundry
     }
     GameRegistry.registerWorldGenerator(new FoundryWorldGenerator(),0);
 
+    /*
+    //TFC Doesn't gen villages, disable loot loading
     ChestGenHooks.addItem(ChestGenHooks.VILLAGE_BLACKSMITH,new WeightedRandomChestContent(FoundryItems.Component(ItemComponent.COMPONENT_AMMO_BULLET),1,5,8));
     ChestGenHooks.addItem(ChestGenHooks.VILLAGE_BLACKSMITH,new WeightedRandomChestContent(FoundryItems.Component(ItemComponent.COMPONENT_AMMO_BULLET_HOLLOW),1,5,7));
     ChestGenHooks.addItem(ChestGenHooks.VILLAGE_BLACKSMITH,new WeightedRandomChestContent(FoundryItems.Component(ItemComponent.COMPONENT_AMMO_CASING),1,5,8));
@@ -272,7 +275,7 @@ public class ModFoundry
     ChestGenHooks.addItem(ChestGenHooks.MINESHAFT_CORRIDOR,new WeightedRandomChestContent(FoundryItems.Component(ItemComponent.COMPONENT_SHOTGUN_FRAME),1,2,10));
     ChestGenHooks.addItem(ChestGenHooks.MINESHAFT_CORRIDOR,new WeightedRandomChestContent(FoundryItems.item_revolver.Empty(),1,1,2));
     ChestGenHooks.addItem(ChestGenHooks.MINESHAFT_CORRIDOR,new WeightedRandomChestContent(new ItemStack(FoundryItems.item_round),4,16,3));
-
+    */
     EntityRegistry.registerModEntity(EntitySkeletonGun.class, "gunSkeleton", 0, this, 80, 1, true);
 
     List<BiomeGenBase> biomes = new ArrayList<BiomeGenBase>();

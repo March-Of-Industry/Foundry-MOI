@@ -102,7 +102,7 @@ public class FoundryRecipes
     FoundryUtils.RegisterBasicMeltingRecipes("Aluminium",LiquidMetalRegistry.instance.GetFluid("Aluminum"));
 
 
-    
+
     AlloyFurnaceRecipeManager.instance.AddRecipe(
         new ItemStack(FoundryItems.item_ingot, 4, ItemIngot.INGOT_BRONZE),
         new Object[] {
@@ -153,7 +153,7 @@ public class FoundryRecipes
             new OreStack("dustNickel", 1) }
         );
     
-
+    /*
     AlloyMixerRecipeManager.instance.AddRecipe(
         new FluidStack(liquid_bronze, 4),
         new FluidStack[] {
@@ -188,7 +188,7 @@ public class FoundryRecipes
           new FluidStack(liquid_copper, 1),
           new FluidStack(liquid_nickel, 1)
         });
-
+    */
     ItemStack mold_ingot = FoundryItems.Mold(ItemMold.MOLD_INGOT);
     ItemStack mold_cable_ic2 = FoundryItems.Mold(ItemMold.MOLD_CABLE_IC2);
     ItemStack mold_insulated_cable_ic2 = FoundryItems.Mold(ItemMold.MOLD_INSULATED_CABLE_IC2);
@@ -257,6 +257,7 @@ public class FoundryRecipes
       CastingRecipeManager.instance.AddMold(mold_helmet);
       CastingRecipeManager.instance.AddMold(mold_boots);
 
+      /*
       CastingRecipeManager.instance.AddRecipe(new ItemStack(Items.iron_chestplate, 1, 0), new FluidStack(liquid_iron, FoundryAPI.FLUID_AMOUNT_INGOT * 8), mold_chestplate, null);
       CastingRecipeManager.instance.AddRecipe(new ItemStack(Items.golden_chestplate, 1, 0), new FluidStack(liquid_gold, FoundryAPI.FLUID_AMOUNT_INGOT * 8), mold_chestplate, null);
 
@@ -283,10 +284,11 @@ public class FoundryRecipes
 
       CastingRecipeManager.instance.AddRecipe(new ItemStack(Items.iron_boots, 1, 0), new FluidStack(liquid_iron, FoundryAPI.FLUID_AMOUNT_INGOT * 4), mold_boots, null);
       CastingRecipeManager.instance.AddRecipe(new ItemStack(Items.golden_boots, 1, 0), new FluidStack(liquid_gold, FoundryAPI.FLUID_AMOUNT_INGOT * 4), mold_boots, null);
-
+      */
     }
     
     //Ingot casting recipes.
+    /*
     for(Entry<String,ItemStack> entry:FoundryItems.ingot_stacks.entrySet())
     {
       CastingRecipeManager.instance.AddRecipe(
@@ -296,9 +298,10 @@ public class FoundryRecipes
               FoundryAPI.FLUID_AMOUNT_INGOT),
           mold_ingot, null);
     }
-    
+    */
     
     //Metal block casting recipes.
+    /*
     for(Entry<String,ItemStack> entry:FoundryBlocks.block_stacks.entrySet())
     {
       Fluid fluid = LiquidMetalRegistry.instance.GetFluid(entry.getKey());
@@ -312,8 +315,9 @@ public class FoundryRecipes
             mold_block, null);
       }
     }
-    
+    */
     //Metal slab casting recipes
+    /*
     for(Entry<String,ItemStack> entry:FoundryBlocks.slab_stacks.entrySet())
     {
       ItemStack stack = entry.getValue();
@@ -340,7 +344,8 @@ public class FoundryRecipes
         MeltingRecipeManager.instance.AddRecipe(stack, fluid);
       }
     }
-    
+    */
+    /*
     if(FoundryConfig.recipe_steel_enable)
     {
       InfuserRecipeManager.instance.AddSubstanceRecipe(new InfuserSubstance("carbon",36), new ItemStack(Items.coal,1,0), 240000);
@@ -351,7 +356,7 @@ public class FoundryRecipes
 
       InfuserRecipeManager.instance.AddRecipe(new FluidStack(liquid_steel,3), new FluidStack(liquid_iron,3), new InfuserSubstance("carbon", 2));
     }
-    
+    */
     if(FoundryConfig.recipe_gear_useoredict)
     {
       for(String name:LiquidMetalRegistry.instance.GetFluidNames())
@@ -952,7 +957,8 @@ public class FoundryRecipes
         }
       }
     }
-    
+
+    /*
     for(Object obj:FurnaceRecipes.smelting().getSmeltingList().entrySet())
     {
       @SuppressWarnings("unchecked")
@@ -974,27 +980,28 @@ public class FoundryRecipes
       {
         ItemStack result = entry.getValue();
         IMeltingRecipe recipe = MeltingRecipeManager.instance.FindRecipe(result);
-        if(recipe != null)
+        if (recipe != null)
         {
           Fluid liquid_metal = recipe.GetOutput().getFluid();
           int base_amount = recipe.GetOutput().amount;
 
           int[] ids = OreDictionary.getOreIDs(stack);
-          for(int j : ids)
+          for (int j : ids)
           {
-            if(OreDictionary.getOreName(j).startsWith("ore"))
+            if (OreDictionary.getOreName(j).startsWith("ore"))
             {
               base_amount = FoundryAPI.FLUID_AMOUNT_ORE;
               break;
             }
           }
-          MeltingRecipeManager.instance.AddRecipe(stack, new FluidStack(liquid_metal, base_amount * result.stackSize),recipe.GetMeltingPoint(),recipe.GetMeltingSpeed());
+          MeltingRecipeManager.instance.AddRecipe(stack, new FluidStack(liquid_metal, base_amount * result.stackSize), recipe.GetMeltingPoint(), recipe.GetMeltingSpeed());
         }
       }
     }
-    
+    */
     ItemStack ingot_mold = FoundryItems.Mold(ItemMold.MOLD_INGOT);
     ItemStack block_mold = FoundryItems.Mold(ItemMold.MOLD_BLOCK);
+    /*
     for(String name:LiquidMetalRegistry.instance.GetFluidNames())
     {
       if(!name.startsWith("Glass"))
@@ -1022,5 +1029,6 @@ public class FoundryRecipes
 
       }
     }
+    */
   }
 }

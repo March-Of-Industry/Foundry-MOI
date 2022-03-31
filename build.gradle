@@ -2,8 +2,8 @@ buildscript {
     repositories {
         mavenCentral()
         maven {
-            name = "forge"
-            url = "http://files.minecraftforge.net/maven"
+            name = "gt"
+            url = "https://gregtech.overminddl1.com/"
         }
         maven {
             name = "sonatype"
@@ -21,14 +21,14 @@ def mod_version = "1.2.2.0"
 
 def mc_version = "1.7.10"
 
-def build_number = System.getenv("DRONE_BUILD_NUMBER")
+def build_number = "FROGPATCH-A"
 
 version = mc_version + "-" + mod_version + ( build_number != null ?("-" + build_number): "")
 group = "exter.foundry" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "Foundry"
 
 minecraft {
-    version = "1.7.10-10.13.4.1492-1.7.10"
+    version = "1.7.10-10.13.4.1614-1.7.10"
     runDir = "eclipse"
 }
 

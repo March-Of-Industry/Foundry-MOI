@@ -11,8 +11,4 @@ public class BlockStairsFoundry extends BlockStairs {
         setCreativeTab(FoundryTabBlocks.tab);
         useNeighborBrightness = true;
     }
-
-
-
 }
-

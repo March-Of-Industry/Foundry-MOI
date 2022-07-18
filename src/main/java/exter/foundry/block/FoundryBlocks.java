@@ -231,7 +231,7 @@ public class FoundryBlocks {
                     "Glass." + ItemDye.field_150921_b /*icon_names*/[i],
                     new ItemStack(Blocks.stained_glass, 1, ~i & 15));
         }
-/*
+        /*
         ItemRegistry.instance.RegisterItem("blockRefractoryCasing", new ItemStack(block_refractory_casing));
         ItemRegistry.instance.RegisterItem("blockMachineAlloyFurnace", new ItemStack(block_alloy_furnace));
         ItemRegistry.instance.RegisterItem(

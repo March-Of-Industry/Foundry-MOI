@@ -8,16 +8,12 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
-import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import exter.foundry.api.FoundryAPI;
-import exter.foundry.block.BlockFoundryOre;
 import exter.foundry.block.FoundryBlocks;
 import exter.foundry.config.FoundryConfig;
-import exter.foundry.entity.EntitySkeletonGun;
 import exter.foundry.integration.*;
 import exter.foundry.item.FoundryItems;
-import exter.foundry.item.ItemComponent;
 import exter.foundry.network.FoundryNetworkChannel;
 import exter.foundry.proxy.CommonFoundryProxy;
 import exter.foundry.recipes.FoundryRecipes;
@@ -37,18 +33,7 @@ import exter.foundry.tileentity.TileEntityMetalAtomizer;
 import exter.foundry.tileentity.TileEntityMetalCaster;
 import exter.foundry.tileentity.TileEntityMetalInfuser;
 import exter.foundry.tileentity.TileEntityRefractoryHopper;
-import exter.foundry.worldgen.FoundryWorldGenerator;
-import exter.foundry.worldgen.WordGenOre;
-import java.util.ArrayList;
-import java.util.List;
-import net.minecraft.entity.EnumCreatureType;
-import net.minecraft.entity.monster.EntitySkeleton;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.world.biome.BiomeGenBase;
-import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.oredict.OreDictionary;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -125,7 +110,6 @@ public class ModFoundry {
         FoundryConfig.Load(config);
         FoundryItems.RegisterItems(config);
         FoundryBlocks.RegisterBlocks(config);
-
 
         FoundryRecipes.PreInit();
 

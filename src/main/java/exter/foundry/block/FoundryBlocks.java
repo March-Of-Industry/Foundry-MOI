@@ -231,7 +231,7 @@ public class FoundryBlocks {
                     "Glass." + ItemDye.field_150921_b /*icon_names*/[i],
                     new ItemStack(Blocks.stained_glass, 1, ~i & 15));
         }
-
+/*
         ItemRegistry.instance.RegisterItem("blockRefractoryCasing", new ItemStack(block_refractory_casing));
         ItemRegistry.instance.RegisterItem("blockMachineAlloyFurnace", new ItemStack(block_alloy_furnace));
         ItemRegistry.instance.RegisterItem(
@@ -262,7 +262,7 @@ public class FoundryBlocks {
         GameRegistry.registerCustomItemStack("refractoryHopper", new ItemStack(block_refractory_hopper));
         GameRegistry.registerCustomItemStack(
                 "machineAtomizer", new ItemStack(block_machine, 1, BlockFoundryMachine.MACHINE_ATOMIZER));
-
+        */
         for (i = 0; i < BlockMetal1.METAL_NAMES.length; i++) {
             ItemStack stack = new ItemStack(block_metal1, 1, i);
             OreDictionary.registerOre(BlockMetal1.OREDICT_NAMES[i], stack);

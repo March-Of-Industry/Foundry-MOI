@@ -15,27 +15,7 @@ import exter.foundry.block.BlockFoundryOre;
 import exter.foundry.block.FoundryBlocks;
 import exter.foundry.config.FoundryConfig;
 import exter.foundry.entity.EntitySkeletonGun;
-import exter.foundry.integration.ModIntegration;
-import exter.foundry.integration.ModIntegrationBotania;
-import exter.foundry.integration.ModIntegrationBuildcraft;
-import exter.foundry.integration.ModIntegrationEnderIO;
-import exter.foundry.integration.ModIntegrationForestry;
-import exter.foundry.integration.ModIntegrationGregtech;
-import exter.foundry.integration.ModIntegrationIC2;
-import exter.foundry.integration.ModIntegrationMatterOverdrive;
-import exter.foundry.integration.ModIntegrationMekanism;
-import exter.foundry.integration.ModIntegrationMetallurgy;
-import exter.foundry.integration.ModIntegrationMinetweaker;
-import exter.foundry.integration.ModIntegrationMystcraft;
-import exter.foundry.integration.ModIntegrationProjectRed;
-import exter.foundry.integration.ModIntegrationRFTools;
-import exter.foundry.integration.ModIntegrationRailcraft;
-import exter.foundry.integration.ModIntegrationRedstoneArsenal;
-import exter.foundry.integration.ModIntegrationTE4;
-import exter.foundry.integration.ModIntegrationTF;
-import exter.foundry.integration.ModIntegrationThaumcraft;
-import exter.foundry.integration.ModIntegrationTiCon;
-import exter.foundry.integration.ModIntegrationTwilightForest;
+import exter.foundry.integration.*;
 import exter.foundry.item.FoundryItems;
 import exter.foundry.item.ItemComponent;
 import exter.foundry.network.FoundryNetworkChannel;
@@ -141,24 +121,11 @@ public class ModFoundry {
         FoundryAPI.recipes_alloyfurnace = AlloyFurnaceRecipeManager.instance;
         FoundryAPI.recipes_atomizer = AtomizerRecipeManager.instance;
 
-        OreDictionary.registerOre("ingotIron", Items.iron_ingot);
-        OreDictionary.registerOre("blockIron", Blocks.iron_block);
-        OreDictionary.registerOre("ingotGold", Items.gold_ingot);
-        OreDictionary.registerOre("blockGold", Blocks.gold_block);
-        OreDictionary.registerOre("nuggetGold", Items.gold_nugget);
-        OreDictionary.registerOre("dustRedstone", Items.redstone);
-        OreDictionary.registerOre("blockRedstone", Blocks.redstone_block);
-
+        ModOreDictionary.init();
         FoundryConfig.Load(config);
         FoundryItems.RegisterItems(config);
         FoundryBlocks.RegisterBlocks(config);
 
-        OreDictionary.registerOre(
-                "dustSmallGunpowder", FoundryItems.Component(ItemComponent.COMPONENT_GUNPOWDER_SMALL));
-        OreDictionary.registerOre("dustSmallBlaze", FoundryItems.Component(ItemComponent.COMPONENT_BLAZEPOWDER_SMALL));
-        OreDictionary.registerOre("dustZinc", FoundryItems.Component(ItemComponent.COMPONENT_DUST_ZINC));
-        OreDictionary.registerOre("dustBrass", FoundryItems.Component(ItemComponent.COMPONENT_DUST_BRASS));
-        OreDictionary.registerOre("dustCupronickel", FoundryItems.Component(ItemComponent.COMPONENT_DUST_CUPRONICKEL));
 
         FoundryRecipes.PreInit();
 
@@ -189,107 +156,6 @@ public class ModFoundry {
         GameRegistry.registerTileEntity(TileEntityMetalAtomizer.class, "Foundry_MetalAtomizer");
 
         FoundryRecipes.Init();
-
-        if (FoundryConfig.worldgen_copper) {
-            WordGenOre.RegisterOre(16, 80, 12, FoundryBlocks.block_ore, BlockFoundryOre.ORE_COPPER);
-        }
-        if (FoundryConfig.worldgen_tin) {
-            WordGenOre.RegisterOre(16, 52, 8, FoundryBlocks.block_ore, BlockFoundryOre.ORE_TIN);
-        }
-        if (FoundryConfig.worldgen_zinc) {
-            WordGenOre.RegisterOre(8, 48, 6, FoundryBlocks.block_ore, BlockFoundryOre.ORE_ZINC);
-        }
-        if (FoundryConfig.worldgen_nickel) {
-            WordGenOre.RegisterOre(8, 36, 5, FoundryBlocks.block_ore, BlockFoundryOre.ORE_NICKEL);
-        }
-        if (FoundryConfig.worldgen_silver) {
-            WordGenOre.RegisterOre(2, 30, 3, FoundryBlocks.block_ore, BlockFoundryOre.ORE_SILVER);
-        }
-        if (FoundryConfig.worldgen_lead) {
-            WordGenOre.RegisterOre(8, 48, 5, FoundryBlocks.block_ore, BlockFoundryOre.ORE_LEAD);
-        }
-        GameRegistry.registerWorldGenerator(new FoundryWorldGenerator(), 0);
-
-        /*
-        //TFC Doesn't gen villages, disable loot loading
-        ChestGenHooks.addItem(ChestGenHooks.VILLAGE_BLACKSMITH,new WeightedRandomChestContent(FoundryItems.Component(ItemComponent.COMPONENT_AMMO_BULLET),1,5,8));
-        ChestGenHooks.addItem(ChestGenHooks.VILLAGE_BLACKSMITH,new WeightedRandomChestContent(FoundryItems.Component(ItemComponent.COMPONENT_AMMO_BULLET_HOLLOW),1,5,7));
-        ChestGenHooks.addItem(ChestGenHooks.VILLAGE_BLACKSMITH,new WeightedRandomChestContent(FoundryItems.Component(ItemComponent.COMPONENT_AMMO_CASING),1,5,8));
-        ChestGenHooks.addItem(ChestGenHooks.VILLAGE_BLACKSMITH,new WeightedRandomChestContent(FoundryItems.Component(ItemComponent.COMPONENT_AMMO_PELLET),1,5,7));
-        ChestGenHooks.addItem(ChestGenHooks.VILLAGE_BLACKSMITH,new WeightedRandomChestContent(FoundryItems.Component(ItemComponent.COMPONENT_AMMO_CASING_SHELL),1,5,7));
-        ChestGenHooks.addItem(ChestGenHooks.VILLAGE_BLACKSMITH,new WeightedRandomChestContent(FoundryItems.Component(ItemComponent.COMPONENT_GUN_BARREL),1,3,6));
-        ChestGenHooks.addItem(ChestGenHooks.VILLAGE_BLACKSMITH,new WeightedRandomChestContent(FoundryItems.Component(ItemComponent.COMPONENT_REVOLVER_DRUM),1,2,6));
-        ChestGenHooks.addItem(ChestGenHooks.VILLAGE_BLACKSMITH,new WeightedRandomChestContent(FoundryItems.Component(ItemComponent.COMPONENT_REVOLVER_FRAME),1,2,6));
-        ChestGenHooks.addItem(ChestGenHooks.VILLAGE_BLACKSMITH,new WeightedRandomChestContent(FoundryItems.Component(ItemComponent.COMPONENT_SHOTGUN_PUMP),1,2,5));
-        ChestGenHooks.addItem(ChestGenHooks.VILLAGE_BLACKSMITH,new WeightedRandomChestContent(FoundryItems.Component(ItemComponent.COMPONENT_SHOTGUN_FRAME),1,2,5));
-        ChestGenHooks.addItem(ChestGenHooks.VILLAGE_BLACKSMITH,new WeightedRandomChestContent(FoundryItems.item_revolver.Empty(),1,1,2));
-        ChestGenHooks.addItem(ChestGenHooks.VILLAGE_BLACKSMITH,new WeightedRandomChestContent(new ItemStack(FoundryItems.item_round),4,16,3));
-
-        ChestGenHooks.addItem(ChestGenHooks.DUNGEON_CHEST,new WeightedRandomChestContent(FoundryItems.Component(ItemComponent.COMPONENT_AMMO_BULLET),1,5,12));
-        ChestGenHooks.addItem(ChestGenHooks.DUNGEON_CHEST,new WeightedRandomChestContent(FoundryItems.Component(ItemComponent.COMPONENT_AMMO_BULLET_HOLLOW),1,5,10));
-        ChestGenHooks.addItem(ChestGenHooks.DUNGEON_CHEST,new WeightedRandomChestContent(FoundryItems.Component(ItemComponent.COMPONENT_AMMO_CASING),1,5,12));
-        ChestGenHooks.addItem(ChestGenHooks.DUNGEON_CHEST,new WeightedRandomChestContent(FoundryItems.Component(ItemComponent.COMPONENT_AMMO_PELLET),1,5,11));
-        ChestGenHooks.addItem(ChestGenHooks.DUNGEON_CHEST,new WeightedRandomChestContent(FoundryItems.Component(ItemComponent.COMPONENT_AMMO_CASING_SHELL),1,5,11));
-        ChestGenHooks.addItem(ChestGenHooks.DUNGEON_CHEST,new WeightedRandomChestContent(FoundryItems.Component(ItemComponent.COMPONENT_GUN_BARREL),1,3,9));
-        ChestGenHooks.addItem(ChestGenHooks.DUNGEON_CHEST,new WeightedRandomChestContent(FoundryItems.Component(ItemComponent.COMPONENT_REVOLVER_DRUM),1,2,9));
-        ChestGenHooks.addItem(ChestGenHooks.DUNGEON_CHEST,new WeightedRandomChestContent(FoundryItems.Component(ItemComponent.COMPONENT_REVOLVER_FRAME),1,2,9));
-        ChestGenHooks.addItem(ChestGenHooks.DUNGEON_CHEST,new WeightedRandomChestContent(FoundryItems.Component(ItemComponent.COMPONENT_SHOTGUN_PUMP),1,2,8));
-        ChestGenHooks.addItem(ChestGenHooks.DUNGEON_CHEST,new WeightedRandomChestContent(FoundryItems.Component(ItemComponent.COMPONENT_SHOTGUN_FRAME),1,2,8));
-        ChestGenHooks.addItem(ChestGenHooks.DUNGEON_CHEST,new WeightedRandomChestContent(FoundryItems.item_revolver.Empty(),1,1,2));
-        ChestGenHooks.addItem(ChestGenHooks.DUNGEON_CHEST,new WeightedRandomChestContent(new ItemStack(FoundryItems.item_round),4,16,3));
-
-        ChestGenHooks.addItem(ChestGenHooks.MINESHAFT_CORRIDOR,new WeightedRandomChestContent(FoundryItems.Component(ItemComponent.COMPONENT_AMMO_BULLET),1,5,14));
-        ChestGenHooks.addItem(ChestGenHooks.MINESHAFT_CORRIDOR,new WeightedRandomChestContent(FoundryItems.Component(ItemComponent.COMPONENT_AMMO_BULLET_HOLLOW),1,5,12));
-        ChestGenHooks.addItem(ChestGenHooks.MINESHAFT_CORRIDOR,new WeightedRandomChestContent(FoundryItems.Component(ItemComponent.COMPONENT_AMMO_CASING),1,5,14));
-        ChestGenHooks.addItem(ChestGenHooks.MINESHAFT_CORRIDOR,new WeightedRandomChestContent(FoundryItems.Component(ItemComponent.COMPONENT_AMMO_PELLET),1,5,13));
-        ChestGenHooks.addItem(ChestGenHooks.MINESHAFT_CORRIDOR,new WeightedRandomChestContent(FoundryItems.Component(ItemComponent.COMPONENT_AMMO_CASING_SHELL),1,5,13));
-        ChestGenHooks.addItem(ChestGenHooks.MINESHAFT_CORRIDOR,new WeightedRandomChestContent(FoundryItems.Component(ItemComponent.COMPONENT_GUN_BARREL),1,3,11));
-        ChestGenHooks.addItem(ChestGenHooks.MINESHAFT_CORRIDOR,new WeightedRandomChestContent(FoundryItems.Component(ItemComponent.COMPONENT_REVOLVER_DRUM),1,2,11));
-        ChestGenHooks.addItem(ChestGenHooks.MINESHAFT_CORRIDOR,new WeightedRandomChestContent(FoundryItems.Component(ItemComponent.COMPONENT_REVOLVER_FRAME),1,2,11));
-        ChestGenHooks.addItem(ChestGenHooks.MINESHAFT_CORRIDOR,new WeightedRandomChestContent(FoundryItems.Component(ItemComponent.COMPONENT_SHOTGUN_PUMP),1,2,10));
-        ChestGenHooks.addItem(ChestGenHooks.MINESHAFT_CORRIDOR,new WeightedRandomChestContent(FoundryItems.Component(ItemComponent.COMPONENT_SHOTGUN_FRAME),1,2,10));
-        ChestGenHooks.addItem(ChestGenHooks.MINESHAFT_CORRIDOR,new WeightedRandomChestContent(FoundryItems.item_revolver.Empty(),1,1,2));
-        ChestGenHooks.addItem(ChestGenHooks.MINESHAFT_CORRIDOR,new WeightedRandomChestContent(new ItemStack(FoundryItems.item_round),4,16,3));
-        */
-        EntityRegistry.registerModEntity(EntitySkeletonGun.class, "gunSkeleton", 0, this, 80, 1, true);
-
-        List<BiomeGenBase> biomes = new ArrayList<BiomeGenBase>();
-        for (BiomeDictionary.Type type : BiomeDictionary.Type.values()) {
-            for (BiomeGenBase bio : BiomeDictionary.getBiomesForType(type)) {
-                if (!biomes.contains(bio)) {
-                    biomes.add(bio);
-                }
-            }
-        }
-        for (BiomeGenBase bio : BiomeDictionary.getBiomesForType(BiomeDictionary.Type.END)) {
-            if (biomes.contains(bio)) {
-                biomes.remove(bio);
-            }
-        }
-        for (BiomeGenBase bio : BiomeDictionary.getBiomesForType(BiomeDictionary.Type.NETHER)) {
-            if (biomes.contains(bio)) {
-                biomes.remove(bio);
-            }
-        }
-
-        List<BiomeGenBase> toremove = new ArrayList<BiomeGenBase>();
-        for (BiomeGenBase bio : biomes) {
-            boolean remove = true;
-            for (BiomeGenBase.SpawnListEntry e :
-                    (List<BiomeGenBase.SpawnListEntry>) bio.getSpawnableList(EnumCreatureType.monster)) {
-                if (e.entityClass == EntitySkeleton.class) {
-                    remove = false;
-                    break;
-                }
-            }
-            if (remove) {
-                toremove.add(bio);
-            }
-        }
-        biomes.removeAll(toremove);
-
-        EntityRegistry.addSpawn(
-                EntitySkeletonGun.class, 8, 1, 2, EnumCreatureType.monster, biomes.toArray(new BiomeGenBase[0]));
 
         proxy.Init();
     }

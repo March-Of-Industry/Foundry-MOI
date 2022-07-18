@@ -37,6 +37,7 @@ public class ModIntegrationTE4 extends ModIntegration
       is_loaded = false;
       return;
     }
+    /*
     ItemStack copper_dust = GameRegistry.findItemStack("ThermalFoundation", "dustCopper", 1);
     ItemStack copper_dust3 = copper_dust.copy();
     copper_dust3.stackSize = 3;
@@ -48,5 +49,6 @@ public class ModIntegrationTE4 extends ModIntegration
 
     ThermalExpansionHelper.addSmelterRecipe(2400, FoundryItems.Ingot(ItemIngot.INGOT_COPPER,3), FoundryItems.Ingot(ItemIngot.INGOT_ZINC,1), FoundryItems.Ingot(ItemIngot.INGOT_BRASS,4));
     ThermalExpansionHelper.addSmelterRecipe(2400, FoundryItems.Ingot(ItemIngot.INGOT_COPPER,1), FoundryItems.Ingot(ItemIngot.INGOT_NICKEL,1), FoundryItems.Ingot(ItemIngot.INGOT_CUPRONICKEL,2));
+    */
   }
 }

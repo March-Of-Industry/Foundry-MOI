@@ -1,25 +1,25 @@
 // Add any additional repositories for your dependencies here
 
 repositories {
-  mavenCentral()
-  maven {
-      name = "gt"
-      url = "https://gregtech.overminddl1.com/"
+  maven 
+  {
+    name "GTNH Maven"
+    url "http://jenkins.usrv.eu:8081/nexus/content/repositories/public/"
+  }
+  ivy 
+  {
+    name "MineTweaker3"
+    artifactPattern "http://minetweaker3.powerofbytes.com/download/[module](-[classifier])-[revision].[ext]"
+    metadataSources {
+        artifact()
+    }
   }
   maven {
-      name = "sonatype"
-      url = "https://oss.sonatype.org/content/repositories/snapshots/"
+      name "CurseMaven"
+      url "https://www.cursemaven.com/"
   }
   maven {
-      name "DVS1 Maven FS'"
-      url 'http://dvs1.progwml6.com/files/maven'
-  }
-  maven {
-      name = "ChickenBones"
-      url = "http://chickenbones.net/maven"
-  }
-  ivy {
-      name "MineTweaker3"
-      artifactPattern "http://minetweaker3.powerofbytes.com/download/[module]-([classifier]-)[revision].[ext]"
+      name "Jitpack"
+      url "https://jitpack.io/"
   }
 }

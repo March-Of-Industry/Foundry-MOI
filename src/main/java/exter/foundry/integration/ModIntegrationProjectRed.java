@@ -49,7 +49,7 @@ public class ModIntegrationProjectRed extends ModIntegration
 
       Fluid destabilized_redstone = FluidRegistry.getFluid("redstone");
       
-
+      /*
       AlloyMixerRecipeManager.instance.AddRecipe(new FluidStack(liquid_redalloy,1),
           new FluidStack[] {
             new FluidStack(FoundryRecipes.liquid_iron,1),
@@ -69,7 +69,7 @@ public class ModIntegrationProjectRed extends ModIntegration
               new OreStack("dustIron",1)},
           new Object[] {
               new OreStack("dustRedstone",4)});
-
+      */
       RegisterCasting(redalloy, liquid_redalloy, 1, ItemMold.MOLD_INGOT, null);
       
       if(Loader.isModLoaded("ProjRed|Transmission"))

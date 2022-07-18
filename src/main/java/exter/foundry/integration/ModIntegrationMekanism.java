@@ -30,8 +30,8 @@ public class ModIntegrationMekanism extends ModIntegration
   {
     liquid_osmium = LiquidMetalRegistry.instance.RegisterLiquidMetal( "Osmium", 3200, 15);
     liquid_refined_glowstone = LiquidMetalRegistry.instance.RegisterLiquidMetal( "RefinedGlowstone", 3200, 15);
-    FoundryUtils.RegisterBasicMeltingRecipes("Osmium", liquid_osmium);
-    FoundryUtils.RegisterBasicMeltingRecipes("RefinedGlowstone", liquid_refined_glowstone);
+    //FoundryUtils.RegisterBasicMeltingRecipes("Osmium", liquid_osmium);
+    //FoundryUtils.RegisterBasicMeltingRecipes("RefinedGlowstone", liquid_refined_glowstone);
   }
 
   @Override
@@ -122,7 +122,7 @@ public class ModIntegrationMekanism extends ModIntegration
       FoundryMiscUtils.RegisterMoldRecipe(ItemMold.MOLD_HOE_SOFT, glowstone_hoe);
     }
 
-    
+
     Fluid liquid_glowstone = FluidRegistry.getFluid("glowstone");
     if(liquid_glowstone != null)
     {

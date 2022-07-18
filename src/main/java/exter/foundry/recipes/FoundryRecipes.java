@@ -93,14 +93,15 @@ public class FoundryRecipes
     LiquidMetalRegistry.instance.RegisterLiquidMetal( "Mithril", 1950, 12);
     LiquidMetalRegistry.instance.RegisterLiquidMetal( "Redstone", 1000, 8);
     LiquidMetalRegistry.instance.RegisterLiquidMetal( "RedAlloy", 1350, 10);    
-    
+
+    /*
     for(String name:LiquidMetalRegistry.instance.GetFluidNames())
     {
       FoundryUtils.RegisterBasicMeltingRecipes(name,LiquidMetalRegistry.instance.GetFluid(name));
     }
     FoundryUtils.RegisterBasicMeltingRecipes("Chrome",LiquidMetalRegistry.instance.GetFluid("Chromium"));
     FoundryUtils.RegisterBasicMeltingRecipes("Aluminium",LiquidMetalRegistry.instance.GetFluid("Aluminum"));
-
+    */
 
 
     AlloyFurnaceRecipeManager.instance.AddRecipe(
@@ -945,7 +946,7 @@ public class FoundryRecipes
           'C', cobble_stack,
           'S', stick_stack);
     }
-    
+    /*
     for(OreDictType type:OreDictType.TYPES)
     {
       for(OreDictMaterial material:OreDictMaterial.MATERIALS)
@@ -956,7 +957,7 @@ public class FoundryRecipes
           MaterialRegistry.instance.RegisterItem(item, material.suffix, type.name);
         }
       }
-    }
+    }*/
 
     /*
     for(Object obj:FurnaceRecipes.smelting().getSmeltingList().entrySet())

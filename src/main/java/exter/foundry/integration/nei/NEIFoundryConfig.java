@@ -2,6 +2,7 @@ package exter.foundry.integration.nei;
 
 import java.util.List;
 
+import exter.foundry.Tags;
 import net.minecraft.item.ItemStack;
 import codechicken.nei.api.API;
 import codechicken.nei.api.IConfigureNEI;
@@ -9,7 +10,6 @@ import codechicken.nei.recipe.TemplateRecipeHandler;
 
 import com.google.common.collect.ImmutableList;
 
-import exter.foundry.ModFoundry;
 import exter.foundry.block.FoundryBlocks;
 
 public class NEIFoundryConfig implements IConfigureNEI
@@ -30,7 +30,7 @@ public class NEIFoundryConfig implements IConfigureNEI
         new InfuserSubstanceRecipeHandler(),
         new AlloyFurnaceRecipeHandler(),
         new MetalAtomizerRecipeHandler());
-    
+
     for(TemplateRecipeHandler handler : handlers)
     {
       API.registerRecipeHandler(handler);
@@ -41,12 +41,12 @@ public class NEIFoundryConfig implements IConfigureNEI
   @Override
   public String getName()
   {
-    return ModFoundry.MODNAME;
+    return Tags.MOD_NAME;
   }
 
   @Override
   public String getVersion()
   {
-    return ModFoundry.MODVERSION;
+    return Tags.MOD_VERSION;
   }
 }

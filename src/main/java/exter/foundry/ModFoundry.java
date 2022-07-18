@@ -9,11 +9,8 @@ import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.WeightedRandomChestContent;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.BiomeDictionary;
-import net.minecraftforge.common.ChestGenHooks;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.oredict.OreDictionary;
 import cpw.mods.fml.common.Mod;
@@ -76,10 +73,11 @@ import exter.foundry.tileentity.TileEntityRefractoryHopper;
 import exter.foundry.worldgen.FoundryWorldGenerator;
 import exter.foundry.worldgen.WordGenOre;
 
+
 @Mod(
-  modid = ModFoundry.MODID,
-  name = ModFoundry.MODNAME,
-  version = ModFoundry.MODVERSION,
+  modid = Tags.MOD_ID,
+  name = Tags.MOD_NAME,
+  version = Tags.MOD_VERSION,
   dependencies = "required-after:Forge@[10.13.4.1448,);"
       + "after:TConstruct;"
       + "after:BuildCraft|Core;"
@@ -95,11 +93,8 @@ import exter.foundry.worldgen.WordGenOre;
 )
 public class ModFoundry
 {
-  public static final String MODID = "foundry";
-  public static final String MODNAME = "Foundry";
-  public static final String MODVERSION = "1.2.2.0-FROGPATCH-A";
 
-  @Instance(MODID)
+    @Instance(Tags.MOD_ID)
   public static ModFoundry instance;
 
   // Says where the client and server 'proxy' code is loaded.
@@ -109,13 +104,13 @@ public class ModFoundry
   )
   public static CommonFoundryProxy proxy;
 
-  
-  public static Logger log = LogManager.getLogger(MODNAME);
+
+  public static Logger log = LogManager.getLogger(Tags.MOD_NAME);
 
   public CraftingEvents crafting_events;
-  
+
   public static FoundryNetworkChannel network_channel;
-  
+
   @EventHandler
   public void preInit(FMLPreInitializationEvent event)
   {
@@ -142,11 +137,11 @@ public class ModFoundry
     ModIntegration.RegisterIntegration(config,ModIntegrationMystcraft.class,"mystcraft");
     ModIntegration.RegisterIntegration(config,ModIntegrationRFTools.class,"rftools");
     ModIntegration.RegisterIntegration(config,ModIntegrationMinetweaker.class,"minetweaker");
-    
+
 
     FoundryAPI.items = ItemRegistry.instance;
     FoundryAPI.fluids = LiquidMetalRegistry.instance;
-    
+
     FoundryAPI.recipes_melting = MeltingRecipeManager.instance;
     FoundryAPI.recipes_casting = CastingRecipeManager.instance;
     FoundryAPI.recipes_alloymixer = AlloyMixerRecipeManager.instance;
@@ -155,7 +150,7 @@ public class ModFoundry
     FoundryAPI.recipes_atomizer = AtomizerRecipeManager.instance;
 
 
-    
+
     OreDictionary.registerOre("ingotIron", Items.iron_ingot);
     OreDictionary.registerOre("blockIron", Blocks.iron_block);
     OreDictionary.registerOre("ingotGold", Items.gold_ingot);
@@ -176,27 +171,27 @@ public class ModFoundry
     OreDictionary.registerOre("dustCupronickel", FoundryItems.Component(ItemComponent.COMPONENT_DUST_CUPRONICKEL));
 
     FoundryRecipes.PreInit();
-    
+
     ModIntegration.PreInit(config);
 
-    
+
     config.save();
 
     crafting_events = new CraftingEvents();
-    
+
     network_channel = new FoundryNetworkChannel();
     NetworkRegistry.INSTANCE.registerGuiHandler(this, proxy);
     proxy.PreInit();
     ModIntegration.AfterPreInit();
   }
-  
- 
+
+
   @SuppressWarnings("unchecked")
   @EventHandler
   public void load(FMLInitializationEvent event)
   {
     ModIntegration.Init();
-    
+
     GameRegistry.registerTileEntity(TileEntityInductionCrucibleFurnace.class, "Foundry_ICF");
     GameRegistry.registerTileEntity(TileEntityMetalCaster.class, "Foundry_MetalCaster");
     GameRegistry.registerTileEntity(TileEntityAlloyMixer.class, "Foundry_AlloyMixer");
@@ -324,7 +319,7 @@ public class ModFoundry
     biomes.removeAll(toremove);
 
     EntityRegistry.addSpawn(EntitySkeletonGun.class, 8, 1, 2, EnumCreatureType.monster, biomes.toArray(new BiomeGenBase[0]));
-    
+
     proxy.Init();
   }
 

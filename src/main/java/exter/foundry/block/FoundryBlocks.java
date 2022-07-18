@@ -3,13 +3,11 @@ package exter.foundry.block;
 import cpw.mods.fml.common.registry.GameRegistry;
 import exter.foundry.item.ItemBlockMulti;
 import exter.foundry.item.ItemBlockSlab;
-import exter.foundry.registry.ItemRegistry;
 import java.util.HashMap;
 import java.util.Map;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockStairs;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.oredict.OreDictionary;
@@ -156,6 +154,7 @@ public class FoundryBlocks {
         GameRegistry.registerBlock(block_slabdouble2, ItemBlockMulti.class, "slabDouble2");
         GameRegistry.registerBlock(block_slabdouble3, ItemBlockMulti.class, "slabDouble3");
 
+        /*
         for (i = 0; i < SLAB1_METALS.length; i++) {
             ItemStack stack = new ItemStack(block_slab1, 1, i);
             slab_stacks.put(SLAB1_METALS[i], stack);
@@ -176,6 +175,7 @@ public class FoundryBlocks {
             ItemRegistry.instance.RegisterItem("blockSlab" + SLAB3_METALS[i], stack);
             GameRegistry.registerCustomItemStack("blockSlab" + SLAB3_METALS[i], stack);
         }
+         */
     }
 
     public static void RegisterBlocks(Configuration config) {
@@ -205,10 +205,11 @@ public class FoundryBlocks {
             block_metal_stairs[i] = (BlockStairs)
                     new BlockStairsFoundry(ms.GetBlock(), ms.block_meta).setBlockName("metalStairs." + ms.metal);
             GameRegistry.registerBlock(block_metal_stairs[i], "stairs" + ms.metal);
-            ItemRegistry.instance.RegisterItem("blockStairs" + ms.metal, new ItemStack(block_metal_stairs[i]));
-            GameRegistry.registerCustomItemStack("blockStairs" + ms.metal, new ItemStack(block_metal_stairs[i]));
+            // ItemRegistry.instance.RegisterItem("blockStairs" + ms.metal, new ItemStack(block_metal_stairs[i]));
+            // GameRegistry.registerCustomItemStack("blockStairs" + ms.metal, new ItemStack(block_metal_stairs[i]));
         }
 
+        /*
         for (i = 0; i < BlockMetal1.METAL_NAMES.length; i++) {
             ItemStack stack = new ItemStack(block_metal1, 1, i);
             block_stacks.put(BlockMetal1.METAL_NAMES[i], stack);
@@ -226,11 +227,12 @@ public class FoundryBlocks {
         block_stacks.put("Glass", new ItemStack(Blocks.glass));
         block_stacks.put("Redstone", new ItemStack(Blocks.redstone_block));
 
-        for (i = 0; i < ItemDye.field_150921_b /*icon_names*/.length; i++) {
+        for (i = 0; i < ItemDye.field_150921_b.length; i++) {
             block_stacks.put(
-                    "Glass." + ItemDye.field_150921_b /*icon_names*/[i],
+                    "Glass." + ItemDye.field_150921_b[i],
                     new ItemStack(Blocks.stained_glass, 1, ~i & 15));
         }
+        */
         /*
         ItemRegistry.instance.RegisterItem("blockRefractoryCasing", new ItemStack(block_refractory_casing));
         ItemRegistry.instance.RegisterItem("blockMachineAlloyFurnace", new ItemStack(block_alloy_furnace));

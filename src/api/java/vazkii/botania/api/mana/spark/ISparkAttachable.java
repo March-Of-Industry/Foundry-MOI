@@ -2,11 +2,11 @@
  * This class was created by <Vazkii>. It's distributed as
  * part of the Botania Mod. Get the Source Code in github:
  * https://github.com/Vazkii/Botania
- * 
+ *
  * Botania is Open Source and distributed under a
  * Creative Commons Attribution-NonCommercial-ShareAlike 3.0 License
  * (http://creativecommons.org/licenses/by-nc-sa/3.0/deed.en_GB)
- * 
+ *
  * File Created @ [Aug 21, 2014, 5:44:13 PM (GMT)]
  */
 package vazkii.botania.api.mana.spark;
@@ -20,35 +20,34 @@ import vazkii.botania.api.mana.IManaReceiver;
  */
 public interface ISparkAttachable extends IManaReceiver {
 
-	/**
-	 * Can this block have a Spark attached to it. Note that this will not
-	 * unattach the Spark if it's changed later.
-	 */
-	public boolean canAttachSpark(ItemStack stack);
+    /**
+     * Can this block have a Spark attached to it. Note that this will not
+     * unattach the Spark if it's changed later.
+     */
+    public boolean canAttachSpark(ItemStack stack);
 
-	/**
-	 * Called when the Spark is attached.
-	 */
-	public void attachSpark(ISparkEntity entity);
+    /**
+     * Called when the Spark is attached.
+     */
+    public void attachSpark(ISparkEntity entity);
 
-	/**
-	 * Gets the Spark that is attached to this block. A common implementation is
-	 * to check for Spark entities above:
-	 * 
-	  	List<ISparkEntity> sparks = worldObj.getEntitiesWithinAABB(ISparkEntity.class, AxisAlignedBB.getBoundingBox(xCoord, yCoord + 1, zCoord, xCoord + 1, yCoord + 2, zCoord + 1));
-	 	if(sparks.size() == 1) {
-			Entity e = (Entity) sparks.get(0);
-			return (ISparkEntity) e;
-		}
+    /**
+     * Gets the Spark that is attached to this block. A common implementation is
+     * to check for Spark entities above:
+     *
+     * List<ISparkEntity> sparks = worldObj.getEntitiesWithinAABB(ISparkEntity.class, AxisAlignedBB.getBoundingBox(xCoord, yCoord + 1, zCoord, xCoord + 1, yCoord + 2, zCoord + 1));
+     * if(sparks.size() == 1) {
+     * Entity e = (Entity) sparks.get(0);
+     * return (ISparkEntity) e;
+     * }
+     *
+     * return null;
+     */
+    public ISparkEntity getAttachedSpark();
 
-		return null;
-	 */
-	public ISparkEntity getAttachedSpark();
-
-	/**
-	 * Return true if this Tile no longer requires mana and all Sparks
-	 * transferring mana to it should cancel their transfer.
-	 */
-	public boolean areIncomingTranfersDone();
-
+    /**
+     * Return true if this Tile no longer requires mana and all Sparks
+     * transferring mana to it should cancel their transfer.
+     */
+    public boolean areIncomingTranfersDone();
 }

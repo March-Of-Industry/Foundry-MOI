@@ -1,7 +1,6 @@
 package com.teammetallurgy.metallurgy.api;
 
-public interface IMetalInfo
-{
+public interface IMetalInfo {
     public String getName();
 
     public MetalType getType();
@@ -10,7 +9,7 @@ public interface IMetalInfo
 
     /**
      * Gets the tool's attack damage
-     * 
+     *
      * @return
      *         The tool's attack damage, and -1 if invalid
      */
@@ -18,7 +17,7 @@ public interface IMetalInfo
 
     /**
      * Gets the tool's durability
-     * 
+     *
      * @return
      *         The tool's durability, and -1 if invalid
      */
@@ -26,7 +25,7 @@ public interface IMetalInfo
 
     /**
      * Gets the tool's efficiency (speed)
-     * 
+     *
      * @return
      *         The tool's efficiency , and -1 if invalid
      */
@@ -34,7 +33,7 @@ public interface IMetalInfo
 
     /**
      * Gets the tool's efficiency (speed)
-     * 
+     *
      * @return
      *         The tool's efficiency , and -1 if invalid
      */
@@ -42,7 +41,7 @@ public interface IMetalInfo
 
     /**
      * Gets the tool's harvest level
-     * 
+     *
      * @return
      *         the tool's harvest level, and -1 if invalid
      */
@@ -54,7 +53,7 @@ public interface IMetalInfo
 
     /**
      * Gets the Armor Multiplier
-     * 
+     *
      * @return
      *         the armor's multiplier, and -1 if invalid.
      */
@@ -62,7 +61,7 @@ public interface IMetalInfo
 
     /**
      * Gets the Armor Damage Reduction array
-     * 
+     *
      * @return
      *         The armor's Damage Reduction array, and null if invalid.
      */
@@ -70,7 +69,7 @@ public interface IMetalInfo
 
     /**
      * Gets the Armor enchantability
-     * 
+     *
      * @return
      *         the armor's enchantability, and -1 if invalid.
      */
@@ -84,7 +83,7 @@ public interface IMetalInfo
 
     /**
      * Gets Generation information
-     * 
+     *
      * @return
      *         An integer array with the following: <br />
      *         0: Veins Pre Chunk, 1: ores Pre Chunk, 2: minLvl, 3:maxLvl, <br />

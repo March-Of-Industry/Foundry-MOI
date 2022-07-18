@@ -3,30 +3,25 @@ package exter.foundry.api.orestack;
 /**
  * An item stack based on the Ore Dictionary
  */
-public class OreStack
-{
-  public String name;
-  
-  public int amount;
+public class OreStack {
+    public String name;
 
-  public OreStack(String ore_name)
-  {
-    this(ore_name,1);
-  }
+    public int amount;
 
-  public OreStack(OreStack stack)
-  {
-    this(stack.name,stack.amount);
-  }
+    public OreStack(String ore_name) {
+        this(ore_name, 1);
+    }
 
-  public OreStack(String ore_name,int ore_amount)
-  {
-    name = ore_name;
-    amount = ore_amount;
-  }
-  
-  public boolean IsStackEqual(OreStack stack)
-  {
-    return name.equals(stack.name);
-  }
+    public OreStack(OreStack stack) {
+        this(stack.name, stack.amount);
+    }
+
+    public OreStack(String ore_name, int ore_amount) {
+        name = ore_name;
+        amount = ore_amount;
+    }
+
+    public boolean IsStackEqual(OreStack stack) {
+        return name.equals(stack.name);
+    }
 }

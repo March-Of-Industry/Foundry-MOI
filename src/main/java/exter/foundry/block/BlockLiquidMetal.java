@@ -1,10 +1,9 @@
 package exter.foundry.block;
 
-import java.util.Random;
-
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import exter.foundry.creativetab.FoundryTabBlocks;
+import java.util.Random;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -22,227 +21,216 @@ import net.minecraftforge.fluids.BlockFluidClassic;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.oredict.OreDictionary;
 
-public class BlockLiquidMetal extends BlockFluidClassic
-{
-  private String texture_name;
-  private Object solid;
-  private int color;
+public class BlockLiquidMetal extends BlockFluidClassic {
+    private String texture_name;
+    private Object solid;
+    private int color;
 
-  public BlockLiquidMetal(Fluid fluid, Material material,String texture,Object solid_block)
-  {
-    super(fluid, material);
-    setLightOpacity(0);
-    setLightLevel(1.0f);
-    texture_name = texture;
-    solid = solid_block;
-    color = fluid.getColor();
-    setBlockName(fluid.getUnlocalizedName()+"Block");
-    setCreativeTab(FoundryTabBlocks.tab);
-  }
-
-  @SideOnly(Side.CLIENT)
-  protected IIcon[] icons;
-  
-  private static final int ICON_STILL = 0;
-  private static final int ICON_FLOWING = 1;
-
-  @Override
-  public IIcon getIcon(int side, int meta)
-  {
-    return side != 0 && side != 1 ? icons[ICON_FLOWING] : icons[ICON_STILL];
-  }
-
-  @Override
-  @SideOnly(Side.CLIENT)
-  public void registerBlockIcons(IIconRegister iconRegister)
-  {
-    icons = new IIcon[2];
-    icons[ICON_STILL] = iconRegister.registerIcon("foundry:" + texture_name + "_still");
-    icons[ICON_FLOWING] = iconRegister.registerIcon("foundry:" + texture_name + "_flow");
-  }
-
-  @Override
-  public int getFireSpreadSpeed(IBlockAccess world, int x, int y, int z, ForgeDirection face)
-  {
-    return 300;
-  }
-
-  @Override
-  public int getFlammability(IBlockAccess world, int x, int y, int z, ForgeDirection face)
-  {
-    return 0;
-  }
-
-  @Override
-  @SideOnly(Side.CLIENT)
-  public void randomDisplayTick(World world, int x, int y, int z, Random rand)
-  {
-    if(temperature < 1200)
-    {
-      return;
-    }
-    double dx;
-    double dy;
-    double dz;
-
-    if(world.getBlock(x, y + 1, z).getMaterial() == Material.air && !world.getBlock(x, y + 1, z).isOpaqueCube())
-    {
-      if(rand.nextInt(100) == 0)
-      {
-        dx = (double) ((float) x + rand.nextFloat());
-        dy = (double) y + this.maxY;
-        dz = (double) ((float) z + rand.nextFloat());
-        world.spawnParticle("lava", dx, dy, dz, 0.0D, 0.0D, 0.0D);
-        world.playSound(dx, dy, dz, "liquid.lavapop", 0.2F + rand.nextFloat() * 0.2F, 0.9F + rand.nextFloat() * 0.15F, false);
-      }
-
-      if(rand.nextInt(200) == 0)
-      {
-        world.playSound((double) x, (double) y, (double) z, "liquid.lava", 0.2F + rand.nextFloat() * 0.2F, 0.9F + rand.nextFloat() * 0.15F, false);
-      }
+    public BlockLiquidMetal(Fluid fluid, Material material, String texture, Object solid_block) {
+        super(fluid, material);
+        setLightOpacity(0);
+        setLightLevel(1.0f);
+        texture_name = texture;
+        solid = solid_block;
+        color = fluid.getColor();
+        setBlockName(fluid.getUnlocalizedName() + "Block");
+        setCreativeTab(FoundryTabBlocks.tab);
     }
 
-    if(rand.nextInt(10) == 0 && World.doesBlockHaveSolidTopSurface(world, x, y - 1, z) && !world.getBlock(x, y - 2, z).getMaterial().blocksMovement())
-    {
-      dx = (double) ((float) x + rand.nextFloat());
-      dy = (double) y - 1.05D;
-      dz = (double) ((float) z + rand.nextFloat());
+    @SideOnly(Side.CLIENT)
+    protected IIcon[] icons;
 
-      world.spawnParticle("dripLava", dx, dy, dz, 0.0D, 0.0D, 0.0D);
+    private static final int ICON_STILL = 0;
+    private static final int ICON_FLOWING = 1;
+
+    @Override
+    public IIcon getIcon(int side, int meta) {
+        return side != 0 && side != 1 ? icons[ICON_FLOWING] : icons[ICON_STILL];
     }
-  }
 
-  @Override
-  public boolean canDisplace(IBlockAccess world, int x, int y, int z)
-  {
-    if(world.getBlock(x, y, z).getMaterial().isLiquid())
-    {
-      return false;
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void registerBlockIcons(IIconRegister iconRegister) {
+        icons = new IIcon[2];
+        icons[ICON_STILL] = iconRegister.registerIcon("foundry:" + texture_name + "_still");
+        icons[ICON_FLOWING] = iconRegister.registerIcon("foundry:" + texture_name + "_flow");
     }
-    return super.canDisplace(world, x, y, z);
-  }
 
-  @Override
-  public boolean displaceIfPossible(World world, int x, int y, int z)
-  {
-    if(world.getBlock(x, y, z).getMaterial().isLiquid())
-    {
-      return false;
+    @Override
+    public int getFireSpreadSpeed(IBlockAccess world, int x, int y, int z, ForgeDirection face) {
+        return 300;
     }
-    return super.displaceIfPossible(world, x, y, z);
-  }
 
-  @Override
-  public void onBlockAdded(World world, int x, int y, int z)
-  {
-    super.onBlockAdded(world, x, y, z);
-    CheckForHarden(world, x, y, z);
-  }
+    @Override
+    public int getFlammability(IBlockAccess world, int x, int y, int z, ForgeDirection face) {
+        return 0;
+    }
 
-  @Override
-  public void onNeighborBlockChange(World world, int x, int y, int z, Block neighbor)
-  {
-    super.onNeighborBlockChange(world, x, y, z, neighbor);
-    CheckForHarden(world, x, y, z);
-  }
- 
-
-  public void CheckForHarden(World world, int x, int y, int z)
-  {
-    if (isSourceBlock(world, x, y, z))
-    {
-      ItemStack item = null;
-      if(solid instanceof ItemStack)
-      {
-        item = (ItemStack)solid;
-      } else if(solid instanceof String)
-      {
-        for(ItemStack i:OreDictionary.getOres((String)solid))
-        {
-          if(i.getItem() instanceof ItemBlock)
-          {
-            item = i;
-            break;
-          }
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void randomDisplayTick(World world, int x, int y, int z, Random rand) {
+        if (temperature < 1200) {
+            return;
         }
-      } else
-      {
-        return;
-      }
-        
-      if(item == null)
-      {
-        return;
-      }
-      Block block = ((ItemBlock)(item.getItem())).field_150939_a;
-      int meta = item.getItemDamage();
-      if(TryToHarden(world, x, y, z, x - 1, y, z, block, meta))
-      {
-        return;
-      }
-      if(TryToHarden(world, x, y, z, x + 1, y, z, block, meta))
-      {
-        return;
-      }
-      if(TryToHarden(world, x, y, z, x, y - 1, z, block, meta))
-      {
-        return;
-      }
-      if(TryToHarden(world, x, y, z, x, y + 1, z, block, meta))
-      {
-        return;
-      }
-      if(TryToHarden(world, x, y, z, x, y, z - 1, block, meta))
-      {
-        return;
-      }
-      if(TryToHarden(world, x, y, z, x, y, z + 1, block, meta))
-      {
-        return;
-      }
-    }
-  }
+        double dx;
+        double dy;
+        double dz;
 
-  private boolean TryToHarden(World world, int x, int y, int z, int nx, int ny, int nz,Block block,int meta)
-  {
-    //Check if block is in contact with water.
-    if(world.getBlock(nx, ny, nz).getMaterial() == Material.water)
-    {
-      int i;
-      //Turn to solid block.
-      world.setBlock(x, y, z, block, meta, 3);
-      world.playSoundEffect((double)((float)x + 0.5F), (double)((float)y + 0.5F), (double)((float)z + 0.5F), "random.fizz", 0.5F, 2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
-      for (i = 0; i < 8; i++)
-      {
-        world.spawnParticle("largesmoke", (double)x + Math.random(), (double)y + 1.2D, (double)z + Math.random(), 0.0D, 0.0D, 0.0D);
-      }
-      return true;
+        if (world.getBlock(x, y + 1, z).getMaterial() == Material.air
+                && !world.getBlock(x, y + 1, z).isOpaqueCube()) {
+            if (rand.nextInt(100) == 0) {
+                dx = (double) ((float) x + rand.nextFloat());
+                dy = (double) y + this.maxY;
+                dz = (double) ((float) z + rand.nextFloat());
+                world.spawnParticle("lava", dx, dy, dz, 0.0D, 0.0D, 0.0D);
+                world.playSound(
+                        dx,
+                        dy,
+                        dz,
+                        "liquid.lavapop",
+                        0.2F + rand.nextFloat() * 0.2F,
+                        0.9F + rand.nextFloat() * 0.15F,
+                        false);
+            }
+
+            if (rand.nextInt(200) == 0) {
+                world.playSound(
+                        (double) x,
+                        (double) y,
+                        (double) z,
+                        "liquid.lava",
+                        0.2F + rand.nextFloat() * 0.2F,
+                        0.9F + rand.nextFloat() * 0.15F,
+                        false);
+            }
+        }
+
+        if (rand.nextInt(10) == 0
+                && World.doesBlockHaveSolidTopSurface(world, x, y - 1, z)
+                && !world.getBlock(x, y - 2, z).getMaterial().blocksMovement()) {
+            dx = (double) ((float) x + rand.nextFloat());
+            dy = (double) y - 1.05D;
+            dz = (double) ((float) z + rand.nextFloat());
+
+            world.spawnParticle("dripLava", dx, dy, dz, 0.0D, 0.0D, 0.0D);
+        }
     }
-    return false;
-  }
-  
-  @Override
-  public void onEntityCollidedWithBlock(World wWorld, int x, int y, int z, Entity entity)
-  {
-    if(entity instanceof EntityLivingBase)
-    {
-      entity.motionX *= 0.5;
-      entity.motionZ *= 0.5;
+
+    @Override
+    public boolean canDisplace(IBlockAccess world, int x, int y, int z) {
+        if (world.getBlock(x, y, z).getMaterial().isLiquid()) {
+            return false;
+        }
+        return super.canDisplace(world, x, y, z);
     }
-    if(!entity.isImmuneToFire())
-    {
-      if(!(entity instanceof EntityItem))
-      {
-        entity.attackEntityFrom(DamageSource.lava, 4);
-      }
-      entity.setFire(15);
+
+    @Override
+    public boolean displaceIfPossible(World world, int x, int y, int z) {
+        if (world.getBlock(x, y, z).getMaterial().isLiquid()) {
+            return false;
+        }
+        return super.displaceIfPossible(world, x, y, z);
     }
-  }
-  
-  @SideOnly(Side.CLIENT)
-  @Override
-  public int getRenderColor(int meta)
-  {
-    return color;
-  }
+
+    @Override
+    public void onBlockAdded(World world, int x, int y, int z) {
+        super.onBlockAdded(world, x, y, z);
+        CheckForHarden(world, x, y, z);
+    }
+
+    @Override
+    public void onNeighborBlockChange(World world, int x, int y, int z, Block neighbor) {
+        super.onNeighborBlockChange(world, x, y, z, neighbor);
+        CheckForHarden(world, x, y, z);
+    }
+
+    public void CheckForHarden(World world, int x, int y, int z) {
+        if (isSourceBlock(world, x, y, z)) {
+            ItemStack item = null;
+            if (solid instanceof ItemStack) {
+                item = (ItemStack) solid;
+            } else if (solid instanceof String) {
+                for (ItemStack i : OreDictionary.getOres((String) solid)) {
+                    if (i.getItem() instanceof ItemBlock) {
+                        item = i;
+                        break;
+                    }
+                }
+            } else {
+                return;
+            }
+
+            if (item == null) {
+                return;
+            }
+            Block block = ((ItemBlock) (item.getItem())).field_150939_a;
+            int meta = item.getItemDamage();
+            if (TryToHarden(world, x, y, z, x - 1, y, z, block, meta)) {
+                return;
+            }
+            if (TryToHarden(world, x, y, z, x + 1, y, z, block, meta)) {
+                return;
+            }
+            if (TryToHarden(world, x, y, z, x, y - 1, z, block, meta)) {
+                return;
+            }
+            if (TryToHarden(world, x, y, z, x, y + 1, z, block, meta)) {
+                return;
+            }
+            if (TryToHarden(world, x, y, z, x, y, z - 1, block, meta)) {
+                return;
+            }
+            if (TryToHarden(world, x, y, z, x, y, z + 1, block, meta)) {
+                return;
+            }
+        }
+    }
+
+    private boolean TryToHarden(World world, int x, int y, int z, int nx, int ny, int nz, Block block, int meta) {
+        // Check if block is in contact with water.
+        if (world.getBlock(nx, ny, nz).getMaterial() == Material.water) {
+            int i;
+            // Turn to solid block.
+            world.setBlock(x, y, z, block, meta, 3);
+            world.playSoundEffect(
+                    (double) ((float) x + 0.5F),
+                    (double) ((float) y + 0.5F),
+                    (double) ((float) z + 0.5F),
+                    "random.fizz",
+                    0.5F,
+                    2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
+            for (i = 0; i < 8; i++) {
+                world.spawnParticle(
+                        "largesmoke",
+                        (double) x + Math.random(),
+                        (double) y + 1.2D,
+                        (double) z + Math.random(),
+                        0.0D,
+                        0.0D,
+                        0.0D);
+            }
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public void onEntityCollidedWithBlock(World wWorld, int x, int y, int z, Entity entity) {
+        if (entity instanceof EntityLivingBase) {
+            entity.motionX *= 0.5;
+            entity.motionZ *= 0.5;
+        }
+        if (!entity.isImmuneToFire()) {
+            if (!(entity instanceof EntityItem)) {
+                entity.attackEntityFrom(DamageSource.lava, 4);
+            }
+            entity.setFire(15);
+        }
+    }
+
+    @SideOnly(Side.CLIENT)
+    @Override
+    public int getRenderColor(int meta) {
+        return color;
+    }
 }

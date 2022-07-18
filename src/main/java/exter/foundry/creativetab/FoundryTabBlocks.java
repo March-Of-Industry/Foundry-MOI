@@ -6,25 +6,21 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
-public class FoundryTabBlocks extends CreativeTabs
-{
-  public static FoundryTabBlocks tab = new FoundryTabBlocks();
+public class FoundryTabBlocks extends CreativeTabs {
+    public static FoundryTabBlocks tab = new FoundryTabBlocks();
 
-  private FoundryTabBlocks()
-  {
-    super("foundryBlocks");
-  }
-  
-  @Override
-  public ItemStack getIconItemStack()
-  {
-    return new ItemStack(FoundryBlocks.block_metal1,1,BlockMetal1.BLOCK_BRONZE);
-  }
+    private FoundryTabBlocks() {
+        super("foundryBlocks");
+    }
 
-  @Override
-  public Item getTabIconItem()
-  {
-    // TODO Auto-generated method stub
-    return null;
-  }
+    @Override
+    public ItemStack getIconItemStack() {
+        return new ItemStack(FoundryBlocks.block_metal1, 1, BlockMetal1.BLOCK_BRONZE);
+    }
+
+    @Override
+    public Item getTabIconItem() {
+        // TODO Auto-generated method stub
+        return null;
+    }
 }

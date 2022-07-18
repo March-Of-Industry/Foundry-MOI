@@ -9,38 +9,33 @@ import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 
-public class ItemShellNormal extends ItemRoundBase
-{
-  public IIcon icon;
-  public ItemShellNormal()
-  {
-    super(5,50,20);
-    setUnlocalizedName("shellNormal");
-  }
+public class ItemShellNormal extends ItemRoundBase {
+    public IIcon icon;
 
-  @Override
-  @SideOnly(Side.CLIENT)
-  public void registerIcons(IIconRegister register)
-  {
-    icon = register.registerIcon("foundry:shell_normal");
-  }
+    public ItemShellNormal() {
+        super(5, 50, 20);
+        setUnlocalizedName("shellNormal");
+    }
 
-  @Override
-  @SideOnly(Side.CLIENT)
-  public IIcon getIconFromDamage(int dmg)
-  {
-    return icon;
-  }
-  
-  @Override
-  public String GetRoundType(ItemStack round)
-  {
-    return ItemShotgun.AMMO_TYPE;
-  }
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void registerIcons(IIconRegister register) {
+        icon = register.registerIcon("foundry:shell_normal");
+    }
 
-  @Override
-  public ItemStack GetCasing(ItemStack round)
-  {
-    return FoundryItems.Component(ItemComponent.COMPONENT_AMMO_CASING_SHELL);
-  }
+    @Override
+    @SideOnly(Side.CLIENT)
+    public IIcon getIconFromDamage(int dmg) {
+        return icon;
+    }
+
+    @Override
+    public String GetRoundType(ItemStack round) {
+        return ItemShotgun.AMMO_TYPE;
+    }
+
+    @Override
+    public ItemStack GetCasing(ItemStack round) {
+        return FoundryItems.Component(ItemComponent.COMPONENT_AMMO_CASING_SHELL);
+    }
 }

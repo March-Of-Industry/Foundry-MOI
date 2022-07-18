@@ -7,11 +7,10 @@ import stanhebben.zenscript.annotations.ZenMethod;
 import stanhebben.zenscript.annotations.ZenOperator;
 
 @ZenClass("mods.foundry.IInfuserSubstance")
-public interface IInfuserSubstance
-{
-  public InfuserSubstance getSubstance();
-  
-  @ZenOperator(OperatorType.MUL)
-  @ZenMethod
-  public IInfuserSubstance amount(int amount);
+public interface IInfuserSubstance {
+    public InfuserSubstance getSubstance();
+
+    @ZenOperator(OperatorType.MUL)
+    @ZenMethod
+    public IInfuserSubstance amount(int amount);
 }

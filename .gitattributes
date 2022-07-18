@@ -1,0 +1,4 @@
+# Disable LF normalization for all files
+* -text eol=lf
+*.ini -text eol=crlf
+*.bat -text eol=crlf

@@ -7,68 +7,58 @@ import net.minecraftforge.fluids.FluidStack;
 /**
  * Metal Infuser recipe manager
  */
-public class InfuserRecipe implements IInfuserRecipe
-{
- 
-  /**
-   * Required fluid.
-   */
-  public final FluidStack fluid;
+public class InfuserRecipe implements IInfuserRecipe {
 
-  /**
-   * Substance required for the recipe.
-   */
-  public final InfuserSubstance substance;
+    /**
+     * Required fluid.
+     */
+    public final FluidStack fluid;
 
-  /**
-   * Fluid produced.
-   */
-  public final FluidStack output;
-  
-  @Override
-  public FluidStack GetInputFluid()
-  {
-    return fluid.copy();
-  }
-  
-  @Override
-  public InfuserSubstance GetInputSubstance()
-  {
-    return substance;
-  }
-  
-  @Override
-  public FluidStack GetOutput()
-  {
-    return output.copy();
-  }
+    /**
+     * Substance required for the recipe.
+     */
+    public final InfuserSubstance substance;
 
-  public InfuserRecipe(FluidStack result,FluidStack in_fluid,InfuserSubstance in_substance)
-  {
-    if(in_fluid == null)
-    {
-      throw new IllegalArgumentException("Infuser recipe input cannot be null");
+    /**
+     * Fluid produced.
+     */
+    public final FluidStack output;
+
+    @Override
+    public FluidStack GetInputFluid() {
+        return fluid.copy();
     }
-    if(in_substance == null)
-    {
-      throw new IllegalArgumentException("Infuser recipe substance cannot be null");
+
+    @Override
+    public InfuserSubstance GetInputSubstance() {
+        return substance;
     }
-    if(result == null)
-    {
-      throw new IllegalArgumentException("Infuser recipe output cannot be null");
+
+    @Override
+    public FluidStack GetOutput() {
+        return output.copy();
     }
-    fluid = in_fluid.copy();
-    substance = new InfuserSubstance(in_substance);
-    output = result.copy();
-  }
-  
-  @Override
-  public boolean MatchesRecipe(FluidStack in_fluid,InfuserSubstance in_substance)
-  {
-    if(substance == null || substance.amount <= 0)
-    {
-      return false;
+
+    public InfuserRecipe(FluidStack result, FluidStack in_fluid, InfuserSubstance in_substance) {
+        if (in_fluid == null) {
+            throw new IllegalArgumentException("Infuser recipe input cannot be null");
+        }
+        if (in_substance == null) {
+            throw new IllegalArgumentException("Infuser recipe substance cannot be null");
+        }
+        if (result == null) {
+            throw new IllegalArgumentException("Infuser recipe output cannot be null");
+        }
+        fluid = in_fluid.copy();
+        substance = new InfuserSubstance(in_substance);
+        output = result.copy();
     }
-    return in_fluid.containsFluid(fluid) && in_substance.Contains(substance);
-  }
+
+    @Override
+    public boolean MatchesRecipe(FluidStack in_fluid, InfuserSubstance in_substance) {
+        if (substance == null || substance.amount <= 0) {
+            return false;
+        }
+        return in_fluid.containsFluid(fluid) && in_substance.Contains(substance);
+    }
 }

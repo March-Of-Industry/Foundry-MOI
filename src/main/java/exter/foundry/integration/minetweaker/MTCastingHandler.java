@@ -14,158 +14,131 @@ import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 
 @ZenClass("mods.foundry.Casting")
-public class MTCastingHandler
-{
-  public static class CastingAction extends AddRemoveAction
-  {
-    
-    ICastingRecipe recipe;
-    
-    public CastingAction(ICastingRecipe recipe)
-    {
-      this.recipe = recipe;
-    }
-    
-    @Override
-    protected void add()
-    {
-      if(recipe.RequiresExtra())
-      {
-        CastingRecipeManager.instance.recipes.add(0,recipe);
-      } else
-      {
-        CastingRecipeManager.instance.recipes.add(recipe);
-      }
+public class MTCastingHandler {
+    public static class CastingAction extends AddRemoveAction {
+
+        ICastingRecipe recipe;
+
+        public CastingAction(ICastingRecipe recipe) {
+            this.recipe = recipe;
+        }
+
+        @Override
+        protected void add() {
+            if (recipe.RequiresExtra()) {
+                CastingRecipeManager.instance.recipes.add(0, recipe);
+            } else {
+                CastingRecipeManager.instance.recipes.add(recipe);
+            }
+        }
+
+        @Override
+        protected void remove() {
+            CastingRecipeManager.instance.recipes.remove(recipe);
+        }
+
+        @Override
+        public String getRecipeType() {
+            return "casting";
+        }
+
+        @Override
+        public String getDescription() {
+            return String.format(
+                    "( %s, %s, %s ) -> %s",
+                    MTHelper.getDescription(recipe.GetInputFluid()),
+                    MTHelper.getDescription(recipe.GetInputMold()),
+                    MTHelper.getDescription(recipe.GetInputExtra()),
+                    MTHelper.getDescription(recipe.GetOutput()));
+        }
     }
 
-    @Override
-    protected void remove()
-    {
-      CastingRecipeManager.instance.recipes.remove(recipe);
+    public static class MoldAction extends AddRemoveAction {
+
+        ItemStack mold;
+
+        public MoldAction(ItemStack mold) {
+            this.mold = mold;
+        }
+
+        @Override
+        protected void add() {
+            CastingRecipeManager.instance.molds.add(mold);
+        }
+
+        @Override
+        protected void remove() {
+            CastingRecipeManager.instance.molds.remove(mold);
+        }
+
+        @Override
+        public String getRecipeType() {
+            return "casting mold";
+        }
+
+        @Override
+        public String getDescription() {
+            return String.format("%s", MTHelper.getDescription(mold));
+        }
     }
 
-    @Override
-    public String getRecipeType()
-    {
-      return "casting";
+    @ZenMethod
+    public static void addRecipe(
+            IItemStack output, ILiquidStack input, IItemStack mold, @Optional IIngredient extra, @Optional int speed) {
+        if (speed == 0) {
+            speed = 100;
+        }
+        ICastingRecipe recipe = null;
+        try {
+            recipe = new CastingRecipe(
+                    MineTweakerMC.getItemStack(output),
+                    MineTweakerMC.getLiquidStack(input),
+                    MineTweakerMC.getItemStack(mold),
+                    MTHelper.getIngredient(extra),
+                    speed);
+        } catch (IllegalArgumentException e) {
+            MineTweakerAPI.logError("Invalid casting recipe: " + e.getMessage());
+            return;
+        }
+        MineTweakerAPI.apply((new CastingAction(recipe).action_add));
     }
 
-    @Override
-    public String getDescription()
-    {
-      return String.format("( %s, %s, %s ) -> %s",
-          MTHelper.getDescription(recipe.GetInputFluid()),
-          MTHelper.getDescription(recipe.GetInputMold()),
-          MTHelper.getDescription(recipe.GetInputExtra()),
-          MTHelper.getDescription(recipe.GetOutput()));
-    }
-  }
-
-  public static class MoldAction extends AddRemoveAction
-  {
-    
-    ItemStack mold;
-    
-    public MoldAction(ItemStack mold)
-    {
-      this.mold = mold;
-    }
-    
-    @Override
-    protected void add()
-    {
-      CastingRecipeManager.instance.molds.add(mold);
+    @ZenMethod
+    public static void removeRecipe(ILiquidStack input, IItemStack mold, @Optional IItemStack extra) {
+        ICastingRecipe recipe = CastingRecipeManager.instance.FindRecipe(
+                MineTweakerMC.getLiquidStack(input),
+                MineTweakerMC.getItemStack(mold),
+                MineTweakerMC.getItemStack(extra));
+        if (recipe == null) {
+            MineTweakerAPI.logWarning("Casting recipe not found.");
+            return;
+        }
+        MineTweakerAPI.apply((new CastingAction(recipe)).action_remove);
     }
 
-    @Override
-    protected void remove()
-    {
-      CastingRecipeManager.instance.molds.remove(mold);
+    @ZenMethod
+    public static void addMold(IItemStack mold) {
+        ItemStack molditem = MineTweakerMC.getItemStack(mold);
+        if (molditem == null) {
+            MineTweakerAPI.logError("Invalid mold item");
+            return;
+        }
+        MineTweakerAPI.apply((new MoldAction(molditem).action_add));
     }
 
-    @Override
-    public String getRecipeType()
-    {
-      return "casting mold";
+    @ZenMethod
+    public static void removeMold(IItemStack mold) {
+        ItemStack molditem = MineTweakerMC.getItemStack(mold);
+        if (molditem == null) {
+            MineTweakerAPI.logWarning("Invalid mold item");
+            return;
+        }
+        for (ItemStack m : CastingRecipeManager.instance.molds) {
+            if (m.isItemEqual(molditem) && ItemStack.areItemStacksEqual(m, molditem)) {
+                MineTweakerAPI.apply((new MoldAction(m)).action_remove);
+                return;
+            }
+        }
+        MineTweakerAPI.logWarning("Mold not found.");
     }
-
-    @Override
-    public String getDescription()
-    {
-      return String.format("%s",
-          MTHelper.getDescription(mold));
-    }
-  }
-
-  @ZenMethod
-  static public void addRecipe(IItemStack output,ILiquidStack input, IItemStack mold,@Optional IIngredient extra,@Optional int speed)
-  {
-    if(speed == 0)
-    {
-      speed = 100;
-    }
-    ICastingRecipe recipe = null;
-    try
-    {
-      recipe = new CastingRecipe(
-        MineTweakerMC.getItemStack(output),
-        MineTweakerMC.getLiquidStack(input),
-        MineTweakerMC.getItemStack(mold),
-        MTHelper.getIngredient(extra),
-        speed);
-    } catch(IllegalArgumentException e)
-    {
-      MineTweakerAPI.logError("Invalid casting recipe: " + e.getMessage());
-      return;
-    }
-    MineTweakerAPI.apply((new CastingAction(recipe).action_add));
-  }
-
-  
-  @ZenMethod
-  static public void removeRecipe(ILiquidStack input, IItemStack mold,@Optional IItemStack extra)
-  {
-    ICastingRecipe recipe = CastingRecipeManager.instance.FindRecipe(
-        MineTweakerMC.getLiquidStack(input),
-        MineTweakerMC.getItemStack(mold),
-        MineTweakerMC.getItemStack(extra));
-    if(recipe == null)
-    {
-      MineTweakerAPI.logWarning("Casting recipe not found.");
-      return;
-    }
-    MineTweakerAPI.apply((new CastingAction(recipe)).action_remove);
-  }
-  
-  @ZenMethod
-  static public void addMold(IItemStack mold)
-  {
-    ItemStack molditem = MineTweakerMC.getItemStack(mold);
-    if(molditem == null)
-    {
-      MineTweakerAPI.logError("Invalid mold item");
-      return;
-    }
-    MineTweakerAPI.apply((new MoldAction(molditem).action_add));
-  }
-
-  @ZenMethod
-  static public void removeMold(IItemStack mold)
-  {
-    ItemStack molditem = MineTweakerMC.getItemStack(mold);
-    if(molditem == null)
-    {
-      MineTweakerAPI.logWarning("Invalid mold item");
-      return;
-    }
-    for(ItemStack m : CastingRecipeManager.instance.molds)
-    {
-      if(m.isItemEqual(molditem) && ItemStack.areItemStacksEqual(m, molditem))
-      {
-        MineTweakerAPI.apply((new MoldAction(m)).action_remove);
-        return;
-      }
-    }
-    MineTweakerAPI.logWarning("Mold not found.");
-  }
 }

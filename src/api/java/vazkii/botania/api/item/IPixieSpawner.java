@@ -2,11 +2,11 @@
  * This class was created by <Vazkii>. It's distributed as
  * part of the Botania Mod. Get the Source Code in github:
  * https://github.com/Vazkii/Botania
- * 
+ *
  * Botania is Open Source and distributed under a
  * Creative Commons Attribution-NonCommercial-ShareAlike 3.0 License
  * (http://creativecommons.org/licenses/by-nc-sa/3.0/deed.en_GB)
- * 
+ *
  * File Created @ [Aug 6, 2014, 6:06:27 PM (GMT)]
  */
 package vazkii.botania.api.item;
@@ -21,10 +21,9 @@ import net.minecraft.item.ItemStack;
  */
 public interface IPixieSpawner {
 
-	/**
-	 * The chance this item adds for pixies to be spawned. From 0.0 to 1.0. All values
-	 * are put together when calculating.
-	 */
-	public float getPixieChance(ItemStack stack);
-
+    /**
+     * The chance this item adds for pixies to be spawned. From 0.0 to 1.0. All values
+     * are put together when calculating.
+     */
+    public float getPixieChance(ItemStack stack);
 }
